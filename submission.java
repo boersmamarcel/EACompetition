@@ -4,6 +4,8 @@ import org.vu.contest.ContestEvaluation;
 import java.util.Random;
 import java.util.Properties;
 
+import java.util.ArrayList;
+
 public class submission implements ContestSubmission
 {
   private Random rnd_;
@@ -45,13 +47,39 @@ public class submission implements ContestSubmission
   {
     // Run your algorithm here
 
+    ArrayList <double[]> population = new ArrayList<double[]>();
+    double child[] = {Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()};
+    population.add(child);
+    population.add(child);
+    population.add(child);
+
+
     int evals = 0;
     while(evals<evaluations_limit_){
-      // Select parents
-      // Apply variation operators and get children
-    //  double child[] = ...
-  //    Double fitness = evaluation_.evaluate(child);
-      evals++;
+
+      for(int i=0; i< population.size(); i++){
+        //evaluate childs
+        evaluation_.evaluate(population.get(i));
+        // Select parents
+        // Apply variation operators and get children
+        //  double child[] = ...
+        //   Double fitness = evaluation_.evaluate(child);
+
+        //do random permuation on child
+        population.get(i)[0] += Math.random();
+        population.get(i)[1] += Math.random();
+        population.get(i)[2] += Math.random();
+        population.get(i)[3] += Math.random();
+        population.get(i)[4] += Math.random();
+        population.get(i)[5] += Math.random();
+        population.get(i)[6] += Math.random();
+        population.get(i)[7] += Math.random();
+        population.get(i)[8] += Math.random();
+        population.get(i)[9] += Math.random();
+
+        evals++;
+
+      }
       // Select survivors
     }
   }
