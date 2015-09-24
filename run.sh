@@ -1,10 +1,9 @@
 #!/bin/sh
-
-javac submission.java -classpath resources/contest.jar
-jar -cf submission.jar submission.class
-mv submission.jar test/
+javac player39.java  -classpath "./:resources/contest.jar"
+jar -cf submission.jar player39.class evo/child.class
+cp submission.jar test/
 cd test/
-java -jar testrun.jar -submission=submission -evaluation=SphereEvaluation -seed=1
+java -jar testrun.jar -submission=player39 -evaluation=SphereEvaluation -seed=1
 rm submission.jar
 cd ..
-rm submission.class
+rm player39.class
