@@ -42,10 +42,16 @@ public class EvoAlgorithm{
   }
 
   public void EvaluatePopulation(ContestEvaluation evaluation){
+    // System.out.println(this.population.population_.get(100).getCoordinates()[0]);
       for(int i = 0; i < this.population.population_.size(); i++){
-        double f = (double) evaluation.evaluate((this.population.population_.get(i)).getCoordinates());
+        Child currentChild = (Child) this.population.population_.get(i);
+        double f = (double) evaluation.evaluate(currentChild.getCoordinates());
         this.population.population_.get(i).setFitness(f);  
       }
+  }
+
+  public Population getPopulation(){
+    return this.population;
   }
 }
 

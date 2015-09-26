@@ -50,7 +50,7 @@ public class player39 implements ContestSubmission
     boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
     //set population size
-    populationSize_ = 100;
+    populationSize_ = 10;
     initializePopulation();
 
 
@@ -90,7 +90,7 @@ public class player39 implements ContestSubmission
   {
     // Run your algorithm here
     int evals = 0;
-    while(evals<evaluations_limit_){
+    while(evals<(evaluations_limit_/this.algo.getPopulation().population_.size())){
 
       ArrayList<Population> parents = algo.ParentSelection();
 
@@ -110,6 +110,9 @@ public class player39 implements ContestSubmission
 
       //do survivor selection
       algo.SurvivorSelection(offspring);
+      // System.out.println(evals);
+      // System.out.println(evaluations_limit_);
+      evals++;
 
     }
   }
