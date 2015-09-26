@@ -84,13 +84,18 @@ public class player39 implements ContestSubmission
     Mutation mutation = new Uniform();
 
     this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
+
+    //evaluate first time set set initial fitness
+    this.algo.EvaluatePopulation(this.evaluation_);
+    
   }
 
   public void run()
   {
     // Run your algorithm here
     int evals = 0;
-    while(evals<(evaluations_limit_/this.algo.getPopulation().population_.size())){
+    //substract 1 due to the initialization cycle
+    while(evals<(evaluations_limit_/this.algo.getPopulation().population_.size())-1){
 
       ArrayList<Population> parents = algo.ParentSelection();
 
