@@ -34,7 +34,7 @@ public class FitnessProportional implements Parent{
           }
         }
         //if non is picked, then it must be the last one
-        return(aPopulation.population_.get(aPopulation.population_.size()));
+        return(aPopulation.population_.get(aPopulation.population_.size()-1));
       }
 
       public ArrayList<Population> select(Population aPopulation){

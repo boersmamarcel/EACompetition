@@ -70,9 +70,21 @@ public class player39 implements ContestSubmission
     Population pop = new Population(); 
 
     for(int i=0; i < populationSize_; i++){
-        double cxs[] = {Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()};
+        double newCoordinates[] = {0,0,0,0,0,0,0,0,0,0};
+        double upper = 5; //max range
+        double lower = -5; //min range
+        newCoordinates[0] = Math.random()*(upper - lower) + lower;
+        newCoordinates[1] = Math.random()*(upper - lower) + lower;
+        newCoordinates[2] = Math.random()*(upper - lower) + lower;
+        newCoordinates[3] = Math.random()*(upper - lower) + lower;
+        newCoordinates[4] = Math.random()*(upper - lower) + lower;
+        newCoordinates[5] = Math.random()*(upper - lower) + lower;
+        newCoordinates[6] = Math.random()*(upper - lower) + lower;
+        newCoordinates[7] = Math.random()*(upper - lower) + lower;
+        newCoordinates[8] = Math.random()*(upper - lower) + lower;
+        newCoordinates[9] = Math.random()*(upper - lower) + lower;
 
-        Child c = new Child(cxs);
+        Child c = new Child(newCoordinates);
         //add childs to population
         pop.addChild(c);
       }  
@@ -106,6 +118,7 @@ public class player39 implements ContestSubmission
         offspring.addChild(c);
       }
 
+      //mutate every child
       for(int i = 0; i < offspring.population_.size(); i++){
         offspring.population_.set(i, (Child) this.algo.Mutation(offspring.population_.get(i))); 
       }
