@@ -25,12 +25,12 @@ public class EvoAlgorithm{
     this.population = pop;
   }
 
-  public Population ParentSelection(){
+  public ArrayList<Population> ParentSelection(){
     return(this.parentSelection.select(this.population));
   }
 
-  public Child Recombination(Child child1, Child child2){
-    return(this.combination.combine(child1, child2));
+  public Child Recombination(Population parents){
+    return(this.combination.combine(parents));
   }
 
   public Child Mutation(Child aChild){

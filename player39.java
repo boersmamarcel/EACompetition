@@ -92,11 +92,12 @@ public class player39 implements ContestSubmission
     int evals = 0;
     while(evals<evaluations_limit_){
 
-      Population parents = algo.ParentSelection();
+      ArrayList<Population> parents = algo.ParentSelection();
 
       Population offspring = new Population();
-      for(int i = 0; i < parents.population_.size(); i++){
-        Child c = algo.Recombination((Child) parents.population_.get(i), (Child) parents.population_.get(i));
+      for(int i = 0; i < parents.size(); i++){
+        Population ps = parents.get(i);
+        Child c = algo.Recombination(ps);
         offspring.addChild(c);
       }
 

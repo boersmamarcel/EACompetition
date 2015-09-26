@@ -1,6 +1,7 @@
 package evo.combination;
 import evo.Child;
+import evo.Population;
 
 public interface Combination{
-  public Child combine(Child child1, Child child2);
+  public Child combine(Population parents);
 }
