@@ -79,7 +79,7 @@ public class player39 implements ContestSubmission
 
     
     Parent selectionP = new FitnessProportional();
-    Survivor selectionS = new Elitism();
+    Survivor selectionS = new Elitism(this.populationSize_);
     Combination combination = new Singlepoint();
     Mutation mutation = new Uniform();
 
@@ -87,7 +87,7 @@ public class player39 implements ContestSubmission
 
     //evaluate first time set set initial fitness
     this.algo.EvaluatePopulation(this.evaluation_);
-    
+
   }
 
   public void run()
