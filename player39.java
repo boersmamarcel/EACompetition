@@ -6,7 +6,15 @@ import java.util.Properties;
 
 import java.util.ArrayList;
 
-import evo.child;
+import evo.Child;
+import evo.EvoAlgorithm;
+import evo.Population;
+import evo.combination.*;
+import evo.mutation.*;
+import evo.selection.parent.*;
+import evo.selection.survivor.Elitism;
+import evo.selection.survivor.*;
+
 
 public class player39 implements ContestSubmission
 {
@@ -16,8 +24,8 @@ public class player39 implements ContestSubmission
 
   private int populationSize_ = 0;
 
-  private ArrayList<child> population_ = null;
-
+  private EvoAlgorithm algo = null;
+  
   public player39()
   {
     rnd_ = new Random();
@@ -43,8 +51,6 @@ public class player39 implements ContestSubmission
 
     //set population size
     populationSize_ = 100;
-
-
     initializePopulation();
 
 
@@ -60,71 +66,50 @@ public class player39 implements ContestSubmission
 
 
   public void initializePopulation(){
+    
+    Population pop = new Population(); 
 
-      population_ = new ArrayList<child>();
-
-      for(int i=0; i < populationSize_; i++){
+    for(int i=0; i < populationSize_; i++){
         double cxs[] = {Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()};
 
-        child c = new child(cxs);
-
-        population_.add(c);
+        Child c = new Child(cxs);
+        //add childs to population
+        pop.addChild(c);
       }  
 
-  }
-
-  // public void recombine(){
-
-  // }
-
-  // public void mutate(){
     
-  // }
+    Parent selectionP = new FitnessProportional();
+    Survivor selectionS = new Elitism();
+    Combination combination = new Singlepoint();
+    Mutation mutation = new Uniform();
 
-  // public void survivors(){
-
-  // }
+    this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
+  }
 
   public void run()
   {
     // Run your algorithm here
-
-
-
     int evals = 0;
     while(evals<evaluations_limit_){
 
+      Population parents = algo.ParentSelection();
 
-
-      for(int i=0; i< population_.size(); i++){
-        //evaluate childs
-        double f = (double) evaluation_.evaluate((population_.get(i)).getCoordinates());
-        // System.out.println("Fitness:"+ f);
-        // Select parents
-        // Apply variation operators and get children
-        //  double child[] = ...
-        //   Double fitness = evaluation_.evaluate(child);
-
-        //do random permuation on child
-        // population_.get(i)[0] += Math.random();
-        // population_.get(i)[1] += Math.random();
-        // population_.get(i)[2] += Math.random();
-        // population_.get(i)[3] += Math.random();
-        // population_.get(i)[4] += Math.random();
-        // population_.get(i)[5] += Math.random();
-        // population_.get(i)[6] += Math.random();
-        // population_.get(i)[7] += Math.random();
-        // population_.get(i)[8] += Math.random();
-        // population_.get(i)[9] += Math.random();
-
-        evals++;
-
+      Population offspring = new Population();
+      for(int i = 0; i < parents.population_.size(); i++){
+        Child c = algo.Recombination((Child) parents.population_.get(i), (Child) parents.population_.get(i));
+        offspring.addChild(c);
       }
 
-            //select k individuals 
-      //pick z best individuals from the selection
+      for(int i = 0; i < offspring.population_.size(); i++){
+        offspring.population_.set(i, (Child) this.algo.Mutation(offspring.population_.get(i))); 
+      }
 
-      // Select survivors
+      //evaluate populaiton
+      algo.EvaluatePopulation(this.evaluation_);
+
+      //do survivor selection
+      algo.SurvivorSelection(offspring);
+
     }
   }
 }

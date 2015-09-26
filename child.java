@@ -1,10 +1,10 @@
 package evo;
 
-public class Child{
+public class child{
   private double[] xs;
   private double fitness_;
 
-  public Child(double[] xs){
+  public child(double[] xs){
     this.xs = xs; 
   }
 
