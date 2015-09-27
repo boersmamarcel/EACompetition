@@ -16,6 +16,7 @@ public class Singlepoint implements Combination{
     Random rnd = new Random();
     //take a recombination point k (with k between 1-10)
     int idx = rnd.nextInt(10);
+    System.out.println(idx);
     //select first k elements from parent 1 and put them in the child
     double xs[] = {0,0,0,0,0,0,0,0,0,0};
     for(int i = 0; i < 10; i++){
