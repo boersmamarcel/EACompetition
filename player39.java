@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import evo.Child;
 import evo.EvoAlgorithm;
 import evo.Population;
-import evo.combination.*;
+import evo.combination.Singlepoint;
+import evo.combination.Simple;
+import evo.combination.Combination;
+import evo.combination.Blend;
+import evo.selection.parent.UniformSelection;
 import evo.mutation.*;
 import evo.selection.parent.*;
 import evo.selection.survivor.Elitism;
@@ -50,7 +54,7 @@ public class player39 implements ContestSubmission
     boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
     //set population size
-    populationSize_ = 10;
+    populationSize_ = 100;
     initializePopulation();
 
 
@@ -90,9 +94,12 @@ public class player39 implements ContestSubmission
       }  
 
     
-    Parent selectionP = new FitnessProportional();
+    // Parent selectionP = new FitnessProportional();
+    Parent selectionP = new UniformSelection();
     Survivor selectionS = new Elitism(this.populationSize_);
-    Combination combination = new Singlepoint();
+    // Combination combination = new Singlepoint(0.5);
+    Combination combination = new Simple(0.5);
+    // Combination combination = new Blend(0.5); //with alpha = 0.5
     Mutation mutation = new Uniform();
 
     this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
@@ -114,8 +121,9 @@ public class player39 implements ContestSubmission
       Population offspring = new Population();
       for(int i = 0; i < parents.size(); i++){
         Population ps = parents.get(i);
-        Child c = algo.Recombination(ps);
-        offspring.addChild(c);
+        Child c[] = algo.Recombination(ps);
+        offspring.addChild(c[0]); //add child 1
+        offspring.addChild(c[1]); //add child 2
       }
 
       //mutate every child

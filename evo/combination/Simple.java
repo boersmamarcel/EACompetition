@@ -3,11 +3,11 @@ import evo.Child;
 import evo.Population;
 import java.util.Random;
 
-public class Singlepoint implements Combination{
+public class Simple implements Combination{
 
   private double alpha = 0; //mixing factor
 
-  public Singlepoint(double a){
+  public Simple(double a){
     this.alpha = a;
   }
 
@@ -23,7 +23,7 @@ public class Singlepoint implements Combination{
     double xs1[] = {0,0,0,0,0,0,0,0,0,0};
     double xs2[] = {0,0,0,0,0,0,0,0,0,0};
     for(int i = 0; i < 10; i++){
-      if(i == idx){
+      if(i <= idx){
         double val = parents.population_.get(0).getCoordinates()[i];//get value from parent 1
         double val1 = parents.population_.get(1).getCoordinates()[i]; //get value from parent 2
         xs1[i] = val; //copy value from parent 1

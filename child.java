@@ -21,4 +21,9 @@ public class child{
   public double[] getCoordinates(){
     return this.xs;
   }
+
+  @Override
+  public String toString(){
+    return(this.xs[0]+":"+this.xs[1]+":"+this.xs[2]+":"+this.xs[3]+":"+this.xs[4]+":"+this.xs[5]+":"+this.xs[6]+":"+this.xs[7]+":"+this.xs[8]+":"+this.xs[9]);
+  }
 }

@@ -7,7 +7,7 @@ import evo.Child;
 
 public class FitnessProportional implements Parent{
       
-      private int numberOfParentsSelected = 4; //should be even for the recombination
+      private int numberOfParentsSelected = 10; //should be even for the recombination
 
       public FitnessProportional(){
 
@@ -16,14 +16,14 @@ public class FitnessProportional implements Parent{
       private double totalFitness(Population aPopulation){
         double total = 0.0;
         for(int i = 0; i < aPopulation.population_.size(); i++){
-          total += aPopulation.population_.get(i).getFitness();
+          total += Math.abs(aPopulation.population_.get(i).getFitness());
         }
 
         return total;
       }
 
 
-
+      //can not handle the negative fitness always selects the last item in the population
       private Child getRandomChild(Population aPopulation, double scale){
         double randNR = Math.random()*scale;
 
@@ -48,7 +48,10 @@ public class FitnessProportional implements Parent{
 
         for(int i = 0; i < this.numberOfParentsSelected; i++){
           Population ps = new Population();
-          ps.addChild(getRandomChild(aPopulation, totalWeight)); //add first parent
+          Child c1 = getRandomChild(aPopulation, totalWeight);
+          // System.out.println("RANDOM CHILD");
+          // System.out.println(c1);
+          ps.addChild(c1); //add first parent
           ps.addChild(getRandomChild(aPopulation, totalWeight)); //add second parent
           parentsList.add(ps); //add one pair of parents
         }

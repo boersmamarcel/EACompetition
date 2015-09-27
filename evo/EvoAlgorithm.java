@@ -29,7 +29,7 @@ public class EvoAlgorithm{
     return(this.parentSelection.select(this.population));
   }
 
-  public Child Recombination(Population parents){
+  public Child[] Recombination(Population parents){
     return(this.combination.combine(parents));
   }
 
