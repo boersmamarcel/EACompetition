@@ -25,8 +25,13 @@ public class UniformSelection implements Parent{
 
         for(int i = 0; i < this.numberOfParentsSelected; i++){
           Population ps = new Population();
-          ps.addChild(aPopulation.population_.get(rnd.nextInt(aPopulation.population_.size()))); //add first parent
-          ps.addChild(aPopulation.population_.get(rnd.nextInt(aPopulation.population_.size()))); //add second parent
+          Child c1 = aPopulation.population_.get(rnd.nextInt(aPopulation.population_.size()));
+          Child c2 = aPopulation.population_.get(rnd.nextInt(aPopulation.population_.size()));
+          // System.out.println("Children");
+          // System.out.println(c1);
+          // System.out.println(c2);
+          ps.addChild(c1); //add first parent
+          ps.addChild(c2); //add second parent
           parentsList.add(ps); //add one pair of parents
         }
 

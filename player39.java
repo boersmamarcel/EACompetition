@@ -15,6 +15,7 @@ import evo.combination.Combination;
 import evo.combination.Blend;
 import evo.selection.parent.UniformSelection;
 import evo.mutation.*;
+import evo.mutation.NonUniform;
 import evo.selection.parent.*;
 import evo.selection.survivor.Elitism;
 import evo.selection.survivor.*;
@@ -54,7 +55,7 @@ public class player39 implements ContestSubmission
     boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
     //set population size
-    populationSize_ = 100;
+    populationSize_ = 200;
     initializePopulation();
 
 
@@ -75,8 +76,8 @@ public class player39 implements ContestSubmission
 
     for(int i=0; i < populationSize_; i++){
         double newCoordinates[] = {0,0,0,0,0,0,0,0,0,0};
-        double upper = 5; //max range
-        double lower = -5; //min range
+        double upper = 0; //max range
+        double lower = 1; //min range
         newCoordinates[0] = Math.random()*(upper - lower) + lower;
         newCoordinates[1] = Math.random()*(upper - lower) + lower;
         newCoordinates[2] = Math.random()*(upper - lower) + lower;
@@ -98,9 +99,10 @@ public class player39 implements ContestSubmission
     Parent selectionP = new UniformSelection();
     Survivor selectionS = new Elitism(this.populationSize_);
     // Combination combination = new Singlepoint(0.5);
-    Combination combination = new Simple(0.5);
-    // Combination combination = new Blend(0.5); //with alpha = 0.5
-    Mutation mutation = new Uniform();
+    // Combination combination = new Simple(0.5);
+    Combination combination = new Blend(0.5); //with alpha = 0.5
+    // Mutation mutation = new Uniform();
+    Mutation mutation = new NonUniform(0.3); //with std = 0.3
 
     this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
 
