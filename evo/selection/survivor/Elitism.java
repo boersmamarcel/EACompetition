@@ -11,13 +11,15 @@ public class Elitism implements Survivor{
   public Elitism(int popSize){
    this.populationSize = popSize; 
   }
+
   public Population select(Population aPopulation, Population offspring){
     Population selectedPopulation = new Population();
 
     selectedPopulation.population_.addAll(aPopulation.population_);
     selectedPopulation.population_.addAll(offspring.population_);
 
-    Collections.sort(selectedPopulation.population_);
+    //descending sort, highest fitness must survive
+    Collections.sort(selectedPopulation.population_, Collections.reverseOrder());
     //sort the population on fitness and retain the first POPSIZE
     selectedPopulation.population_.subList(this.populationSize, selectedPopulation.population_.size()).clear();
 

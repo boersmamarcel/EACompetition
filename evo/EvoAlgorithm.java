@@ -41,13 +41,15 @@ public class EvoAlgorithm{
     this.population = this.survivorSelection.select(this.population, offspring);
   }
 
-  public void EvaluatePopulation(ContestEvaluation evaluation){
+  public int EvaluatePopulation(ContestEvaluation evaluation){
     // System.out.println(this.population.population_.get(100).getCoordinates()[0]);
       for(int i = 0; i < this.population.population_.size(); i++){
         Child currentChild = (Child) this.population.population_.get(i);
         double f = (double) evaluation.evaluate(currentChild.getCoordinates());
         this.population.population_.get(i).setFitness(f);  
       }
+
+      return this.population.population_.size();
   }
 
   public Population getPopulation(){

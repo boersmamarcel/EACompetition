@@ -30,6 +30,7 @@ public class player39 implements ContestSubmission
   private int populationSize_ = 0;
 
   private EvoAlgorithm algo = null;
+  private int evals = 0;
   
   public player39()
   {
@@ -55,7 +56,7 @@ public class player39 implements ContestSubmission
     boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
     //set population size
-    populationSize_ = 200;
+    populationSize_ = 20;
     initializePopulation();
 
 
@@ -76,8 +77,8 @@ public class player39 implements ContestSubmission
 
     for(int i=0; i < populationSize_; i++){
         double newCoordinates[] = {0,0,0,0,0,0,0,0,0,0};
-        double upper = 0; //max range
-        double lower = 1; //min range
+        double upper = -5; //max range
+        double lower = 5; //min range
         newCoordinates[0] = Math.random()*(upper - lower) + lower;
         newCoordinates[1] = Math.random()*(upper - lower) + lower;
         newCoordinates[2] = Math.random()*(upper - lower) + lower;
@@ -107,16 +108,17 @@ public class player39 implements ContestSubmission
     this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
 
     //evaluate first time set set initial fitness
-    this.algo.EvaluatePopulation(this.evaluation_);
+    this.evals += this.algo.EvaluatePopulation(this.evaluation_);
 
   }
 
   public void run()
   {
     // Run your algorithm here
-    int evals = 0;
+
     //substract 1 due to the initialization cycle
-    while(evals<(evaluations_limit_/this.algo.getPopulation().population_.size())-1){
+    //we should be able the run the total population twice, ie due to the offspring created
+    while(evals< (evaluations_limit_ - 2*this.populationSize_)){
 
       ArrayList<Population> parents = algo.ParentSelection();
 
@@ -133,14 +135,20 @@ public class player39 implements ContestSubmission
         offspring.population_.set(i, (Child) this.algo.Mutation(offspring.population_.get(i))); 
       }
 
+      //get fitness for offspring
+      for(int i = 0; i < offspring.population_.size(); i++){
+        Child currentChild = (Child) offspring.population_.get(i);
+        double f = (double) this.evaluation_.evaluate(currentChild.getCoordinates());
+        offspring.population_.get(i).setFitness(f);
+        this.evals++;
+      }
+
+
       //evaluate populaiton
-      algo.EvaluatePopulation(this.evaluation_);
+      this.evals += algo.EvaluatePopulation(this.evaluation_);
 
       //do survivor selection
       algo.SurvivorSelection(offspring);
-      // System.out.println(evals);
-      // System.out.println(evaluations_limit_);
-      evals++;
 
     }
   }
