@@ -7,6 +7,8 @@ public class Child implements Comparable<Child>{
   public double minRange = -5;
   public double maxRange = 5;
 
+  public int generation = 1;
+
   public Child(double[] xs){
     this.xs = xs; 
   }

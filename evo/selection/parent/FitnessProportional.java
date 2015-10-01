@@ -21,7 +21,7 @@ public class FitnessProportional implements Parent{
 
         return total;
       }
-
+ 
 
       //can not handle the negative fitness always selects the last item in the population
       private Child getRandomChild(Population aPopulation, double scale){
@@ -38,6 +38,9 @@ public class FitnessProportional implements Parent{
       }
 
       public ArrayList<Population> select(Population aPopulation){
+        //rescale population in order to make weighted sampling work
+        this.rescale_fitness(aPopulation);
+
         //randomize population
         Collections.shuffle(aPopulation.population_);
 
@@ -58,4 +61,19 @@ public class FitnessProportional implements Parent{
 
         return (parentsList);
     } 
+
+    private void rescale_fitness(Population pop){
+      double minfitness=0.0;
+      for(int i=0; i<pop.population_.size(); i++){
+        Child c = pop.population_.get(i);
+        if (c.getFitness()<minfitness){
+          minfitness=c.getFitness();
+        }
+      }
+      for(int i=0; i<pop.population_.size(); i++){
+        Child c = pop.population_.get(i);
+        // System.out.println("Old fitness:"+c.getFitness()+" new:"+(c.getFitness()+Math.abs(minfitness)));
+        c.setFitness(c.getFitness()+Math.abs(minfitness));
+      }
+    }
 }

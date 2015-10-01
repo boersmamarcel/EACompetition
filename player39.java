@@ -16,6 +16,7 @@ import evo.combination.Blend;
 import evo.selection.parent.UniformSelection;
 import evo.mutation.*;
 import evo.mutation.NonUniform;
+import evo.mutation.SelfAdaptive;
 import evo.selection.parent.*;
 import evo.selection.survivor.Elitism;
 import evo.selection.survivor.*;
@@ -96,14 +97,15 @@ public class player39 implements ContestSubmission
       }  
 
     
-    // Parent selectionP = new FitnessProportional();
-    Parent selectionP = new UniformSelection();
+    Parent selectionP = new FitnessProportional();
+    // Parent selectionP = new UniformSelection();
     Survivor selectionS = new Elitism(this.populationSize_);
     // Combination combination = new Singlepoint(0.5);
-    // Combination combination = new Simple(0.5);
-    Combination combination = new Blend(0.5); //with alpha = 0.5
+    Combination combination = new Simple(0.5);
+    // Combination combination = new Blend(0.5); //with alpha = 0.5
     // Mutation mutation = new Uniform();
-    Mutation mutation = new NonUniform(0.3); //with std = 0.3
+    // Mutation mutation = new NonUniform(0.3); //with std = 0.3
+    Mutation mutation = new SelfAdaptive(.7, 100); //with std = 0.3
 
     this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
 
@@ -132,6 +134,7 @@ public class player39 implements ContestSubmission
 
       //mutate every child
       for(int i = 0; i < offspring.population_.size(); i++){
+        offspring.population_.get(i).generation = this.algo.count;
         offspring.population_.set(i, (Child) this.algo.Mutation(offspring.population_.get(i))); 
       }
 

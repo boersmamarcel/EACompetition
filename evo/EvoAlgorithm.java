@@ -17,6 +17,8 @@ public class EvoAlgorithm{
   private Combination combination = null;
   private Population population = null;
 
+  public int count = 1;
+
   public EvoAlgorithm(Parent pselection, Survivor sselection, Mutation m, Combination c, Population pop){
     this.parentSelection = pselection;
     this.survivorSelection = sselection;
@@ -42,11 +44,13 @@ public class EvoAlgorithm{
   }
 
   public int EvaluatePopulation(ContestEvaluation evaluation){
+    this.count += 1;
     // System.out.println(this.population.population_.get(100).getCoordinates()[0]);
       for(int i = 0; i < this.population.population_.size(); i++){
         Child currentChild = (Child) this.population.population_.get(i);
         double f = (double) evaluation.evaluate(currentChild.getCoordinates());
-        this.population.population_.get(i).setFitness(f);  
+        this.population.population_.get(i).setFitness(f); 
+        this.population.population_.get(i).generation = count; //let the child know the global count state
       }
 
       return this.population.population_.size();
