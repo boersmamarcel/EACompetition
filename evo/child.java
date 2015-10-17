@@ -12,7 +12,8 @@ public class Child implements Comparable<Child>{
 
   public Child(double[] xs){
     this.xs = xs; 
-    this.sigma = {1,1,1,1,1,1,1,1,1,1};
+    double sigmas[] = {1,1,1,1,1,1,1,1,1,1};
+    this.sigma = sigmas;
   }
 
   public void setFitness(double f){
@@ -27,7 +28,7 @@ public class Child implements Comparable<Child>{
     this.sigma = sigma;
   }
 
-  public double getSigma(){
+  public double[] getSigma(){
     return this.sigma;
   }
 

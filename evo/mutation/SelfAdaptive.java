@@ -5,9 +5,11 @@ import evo.Child;
 
 public class SelfAdaptive implements Mutation{
  private double tau = 1;
+ private double tau2 = 1;
 
-  public SelfAdaptive(double tau){
+  public SelfAdaptive(double tau, double tau2){
     this.tau = tau;
+    this.tau2 = tau2;
   }
 
   private double randomGauss(double mu, double sigma){
@@ -31,10 +33,12 @@ public class SelfAdaptive implements Mutation{
 
   public Child mutate(Child aChild){
 
+    double sigma[] = aChild.getSigma();
+    double nsigma[] = {0,0,0,0,0,0,0,0,0,0};
     //get sigma
-    double sigma = aChild.getSigma();
-
-    double nsigma = sigma*Math.exp(this.tau*this.randomGauss(0, sigma));
+    for(int i = 0; i < 10; i++){ 
+      nsigma[i] = sigma[i]*Math.exp(this.tau*this.randomGauss(0, 1) + this.tau2*randomGauss(0,1));
+    }
 
     //set sigma
     aChild.setSigma(nsigma);
@@ -45,7 +49,7 @@ public class SelfAdaptive implements Mutation{
     double current[] = aChild.getCoordinates();
     //apply a gaussian mutation
     for(int i = 0; i < 10; i++){ 
-      current[i] += nsigma*this.randomGauss(0,1); //pertubate by gaussian noise
+      current[i] += nsigma[i]*this.randomGauss(0,1); //pertubate by gaussian noise
     }
 
     //update to new coordinates
