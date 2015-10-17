@@ -3,7 +3,7 @@ package evo;
 public class Child implements Comparable<Child>{
   private double[] xs;
   private double fitness_;
-  private double sigma;
+  private double[] sigma;
 
   public double minRange = -5;
   public double maxRange = 5;
@@ -12,7 +12,7 @@ public class Child implements Comparable<Child>{
 
   public Child(double[] xs){
     this.xs = xs; 
-    this.sigma = 1;
+    this.sigma = {1,1,1,1,1,1,1,1,1,1};
   }
 
   public void setFitness(double f){
@@ -23,7 +23,7 @@ public class Child implements Comparable<Child>{
     return this.fitness_;
   }
 
-  public void setSigma(double sigma){
+  public void setSigma(double[] sigma){
     this.sigma = sigma;
   }
 

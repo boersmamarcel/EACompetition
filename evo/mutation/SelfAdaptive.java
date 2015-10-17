@@ -4,7 +4,7 @@ import java.util.Random;
 import evo.Child;
 
 public class SelfAdaptive implements Mutation{
- private double tau = 0.0;
+ private double tau = 1;
 
   public SelfAdaptive(double tau){
     this.tau = tau;
