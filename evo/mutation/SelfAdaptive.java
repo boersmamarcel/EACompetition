@@ -39,7 +39,7 @@ public class SelfAdaptive implements Mutation{
 
     //get sigma
     for(int i = 0; i < 10; i++){ 
-      nsigma[i] = sigma[i]*(Math.exp(-(aChild.generation/20))) + this.randomGauss(0,0.7)*Math.exp(-(aChild.generation/20));
+      nsigma[i] = sigma[i]*(Math.exp(-(aChild.generation/20))) + this.randomGauss(0,sigma[i])*Math.exp(-(aChild.generation/20));
     }
 
     //set sigma
