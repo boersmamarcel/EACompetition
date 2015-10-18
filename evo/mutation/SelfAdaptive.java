@@ -4,16 +4,15 @@ import java.util.Random;
 import evo.Child;
 
 public class SelfAdaptive implements Mutation{
- private double std = 0.0;
- private double scaledStd  = 0.0;
- private double scaling = 0.0;
+ private double tau = 1;
+ private double tau2 = 1;
 
-  public SelfAdaptive(double std, double scaling){
-    this.std = std;
-    this.scaling = scaling;
+  public SelfAdaptive(double tau, double tau2){
+    this.tau = tau;
+    this.tau2 = tau2;
   }
 
-  private double randomGauss(){
+  private double randomGauss(double mu, double sigma){
     // code from http://www.cs.princeton.edu/courses/archive/fall12/cos126/assignments/StdGaussian.java.html
     double r, x, y;
 
@@ -29,13 +28,22 @@ public class SelfAdaptive implements Mutation{
     double z = x * Math.sqrt(-2.0 * Math.log(r) / r);
 
     //transformation see https://en.wikipedia.org/wiki/Box–Muller_transform#Implementation
-    return (z*this.scaledStd);
+    return (z*sigma + mu);
   }
 
   public Child mutate(Child aChild){
 
+
+    double sigma[] = aChild.getSigma();
+    double nsigma[] = {0,0,0,0,0,0,0,0,0,0};
+ 
+    //get sigma
+    for(int i = 0; i < 10; i++){ 
+      nsigma[i] = sigma[i]*(Math.exp(-(aChild.generation/20))) + this.randomGauss(0,sigma[i])*Math.exp(-(aChild.generation/20));
+    }
+
     //set sigma
-    this.scaledStd = this.std*(Math.exp(-(aChild.generation/this.scaling)));
+    aChild.setSigma(nsigma);
 
     // System.out.printf("%n$%.2f",this.std);
     // System.out.println("SIGMA:"+this.scaledStd);
@@ -43,7 +51,7 @@ public class SelfAdaptive implements Mutation{
     double current[] = aChild.getCoordinates();
     //apply a gaussian mutation
     for(int i = 0; i < 10; i++){ 
-      current[i] += this.randomGauss(); //pertubate by gaussian noise
+      current[i] += nsigma[i]*this.randomGauss(0,1); //pertubate by gaussian noise
     }
 
     //update to new coordinates
