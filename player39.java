@@ -106,7 +106,7 @@ public class player39 implements ContestSubmission
     // Combination combination = new Blend(0.5); //with alpha = 0.5
     // Mutation mutation = new Uniform();
     // Mutation mutation = new NonUniform(0.3); //with std = 0.3
-    Mutation mutation = new SelfAdaptive(0.35, 0.35); //with std = 0.3
+    Mutation mutation = new SelfAdaptive(15); //with scale = 15
 
     this.algo = new EvoAlgorithm(selectionP,selectionS, mutation, combination, pop);
 

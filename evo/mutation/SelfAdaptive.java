@@ -4,12 +4,10 @@ import java.util.Random;
 import evo.Child;
 
 public class SelfAdaptive implements Mutation{
- private double tau = 1;
- private double tau2 = 1;
+ private double scale = 1;
 
-  public SelfAdaptive(double tau, double tau2){
-    this.tau = tau;
-    this.tau2 = tau2;
+  public SelfAdaptive(double scale){
+    this.scale = scale;
   }
 
   private double randomGauss(double mu, double sigma){
@@ -39,7 +37,7 @@ public class SelfAdaptive implements Mutation{
  
     //get sigma
     for(int i = 0; i < 10; i++){ 
-      nsigma[i] = sigma[i]*(Math.exp(-(aChild.generation/20))) + this.randomGauss(0,sigma[i])*Math.exp(-(aChild.generation/20));
+      nsigma[i] = sigma[i]*(Math.exp(-(aChild.generation/this.scale))) + this.randomGauss(0,sigma[i])*Math.exp(-(aChild.generation/this.scale));
     }
 
     //set sigma
