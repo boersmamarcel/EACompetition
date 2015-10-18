@@ -36,7 +36,7 @@ public class SelfAdaptive implements Mutation{
 
     double sigma[] = aChild.getSigma();
     double nsigma[] = {0,0,0,0,0,0,0,0,0,0};
-
+ 
     //get sigma
     for(int i = 0; i < 10; i++){ 
       nsigma[i] = sigma[i]*(Math.exp(-(aChild.generation/20))) + this.randomGauss(0,sigma[i])*Math.exp(-(aChild.generation/20));
